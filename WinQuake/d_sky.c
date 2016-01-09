@@ -73,7 +73,7 @@ void D_DrawSkyScans8 (espan_t *pspan)
 	tstep = 0;	// ditto
 	snext = 0;
 	tnext = 0;
-
+	char* test = "test";
 	do
 	{
 		pdest = (unsigned char *)((byte *)d_viewbuffer +
