@@ -146,7 +146,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\common.c" />
+    <ClCompile Include="..\src\q_stl.c" />
     <ClCompile Include="W:\quake\HandmadeQuake\src\sys_win.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\common.h" />
+    <ClInclude Include="..\src\quakedef.h" />
+    <ClInclude Include="..\src\q_stl.h" />
+    <ClInclude Include="..\src\winquake.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
