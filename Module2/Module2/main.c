@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <windows.h>
 
 BOOL  IsRunning = TRUE;
@@ -52,7 +53,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	AdjustWindowRect(&r, WindowStyle, FALSE);
 
-	mainWindow = CreateWindowEx(0, "Module 2", "Lesson 2.1", WindowStyle, 
+	mainWindow = CreateWindowEx(0, "Module 2", "Lesson 2.3", WindowStyle, 
 		CW_USEDEFAULT, CW_USEDEFAULT, r.right - r.left, r.bottom - r.top, 
 		NULL, NULL, hInstance, 0);
 
@@ -61,7 +62,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HDC DeviceContext = GetDC(mainWindow);
 	PatBlt(DeviceContext, 0, 0, 800, 600, BLACKNESS);
 	ReleaseDC(mainWindow, DeviceContext);
-	
+
+	LARGE_INTEGER Frequency;
+	QueryPerformanceFrequency(&Frequency);
+
+	double SecondsPerTick = 1.0f / (double)Frequency.QuadPart;
+
+	LARGE_INTEGER Tick, Tock;
+	QueryPerformanceCounter(&Tick);
+
 	MSG msg;
 	while (IsRunning)
 	{
@@ -70,6 +79,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+
+		//Sleep(1000);
+		QueryPerformanceCounter(&Tock);
+		__int64 Interval = Tock.QuadPart - Tick.QuadPart;
+		double SecondsGoneBy = (double)Interval * SecondsPerTick;
+		char buf[64];
+		sprintf_s(buf, 64, "Seconds gone by: %3.7f\n", SecondsGoneBy);
+		OutputDebugString(buf);
+		QueryPerformanceCounter(&Tick);
 	}
 	
 	return 0;
